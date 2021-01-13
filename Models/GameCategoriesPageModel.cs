@@ -27,37 +27,37 @@ namespace Project_Dorut_Iuga.Models
             });
         }
     }
-    public void UpdateBookCategories(Project_Dorut_IugaContext context,
-    string[] selectedCategories, Game bookToUpdate)
+    public void UpdateGameCategories(Project_Dorut_IugaContext context,
+    string[] selectedCategories, Game gameToUpdate)
     {
         if (selectedCategories == null)
         {
-            bookToUpdate.GameCategories = new List<GameCategory>();
+            gameToUpdate.GameCategories = new List<GameCategory>();
             return;
         }
         var selectedCategoriesHS = new HashSet<string>(selectedCategories);
-        var bookCategories = new HashSet<int>
-        (bookToUpdate.GameCategories.Select(c => c.Category.ID));
+        var gameCategories = new HashSet<int>
+        (gameToUpdate.GameCategories.Select(c => c.Category.ID));
         foreach (var cat in context.Category)
         {
             if (selectedCategoriesHS.Contains(cat.ID.ToString()))
             {
-                if (!bookCategories.Contains(cat.ID))
+                if (!gameCategories.Contains(cat.ID))
                 {
-                    bookToUpdate.GameCategories.Add(
+                    gameToUpdate.GameCategories.Add(
                     new GameCategory
                     {
-                        GameID = bookToUpdate.ID,
+                        GameID = gameToUpdate.ID,
                         CategoryID = cat.ID
                     });
                 }
             }
             else
             {
-                if (bookCategories.Contains(cat.ID))
+                if (gameCategories.Contains(cat.ID))
                 {
                     GameCategory courseToRemove
-                    = bookToUpdate
+                    = gameToUpdate
                     .GameCategories
                     .SingleOrDefault(i => i.CategoryID == cat.ID);
                     context.Remove(courseToRemove);

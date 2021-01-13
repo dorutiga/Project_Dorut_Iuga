@@ -54,29 +54,29 @@ namespace Project_Dorut_Iuga.Pages.Games
             {
                 return NotFound();
             }
-            var bookToUpdate = await _context.Game
+            var GameToUpdate = await _context.Game
             .Include(i => i.Developer)
             .Include(i => i.GameCategories)
             .ThenInclude(i => i.Category)
             .FirstOrDefaultAsync(s => s.ID == id);
-            if (bookToUpdate == null)
+            if (GameToUpdate == null)
             {
                 return NotFound();
             }
             if (await TryUpdateModelAsync<Game>(
-            bookToUpdate,
-            "Book",
+            GameToUpdate,
+            "Game",
             i => i.Title, i => i.GameType,
             i => i.Price, i => i.PublishingDate, i => i.Developer))
             {
-                UpdateBookCategories(_context, selectedCategories, bookToUpdate);
+                UpdateGameCategories(_context, selectedCategories, GameToUpdate);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");
             }
             //Apelam UpdateBookCategories pentru a aplica informatiile din checkboxuri la entitatea Books care
             //este editata
-            UpdateBookCategories(_context, selectedCategories, bookToUpdate);
-            PopulateAssignedCategoryData(_context, bookToUpdate);
+            UpdateGameCategories(_context, selectedCategories, GameToUpdate);
+            PopulateAssignedCategoryData(_context, GameToUpdate);
             return Page();
         }
     }

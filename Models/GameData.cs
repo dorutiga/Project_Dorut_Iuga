@@ -9,6 +9,6 @@ namespace Project_Dorut_Iuga.Models
     {
         public IEnumerable<Game> Games { get; set; }
         public IEnumerable<Category> Categories { get; set; }
-        public IEnumerable<GameCategory> BookCategories { get; set; }
+        public IEnumerable<GameCategory> GameCategories { get; set; }
     }
 }
